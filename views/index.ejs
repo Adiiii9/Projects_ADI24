@@ -1,0 +1,72 @@
+<%- include('header'); -%>
+
+
+<script>
+    
+
+    var text = "# Craft Your stories, ideas and perspective";
+    var index = 0;
+    var animationDisplayed = false; // Flag variable
+    
+    // Function to simulate typing effect
+    function typeText() {
+      if (!animationDisplayed && index < text.length) {
+        // Get the current text and append the next character
+        var currentText = document.getElementById("typing-effect").innerHTML;
+        document.getElementById("typing-effect").innerHTML = currentText + text.charAt(index);
+        index++;
+        setTimeout(typeText, 100); // 3-second delay
+      } else {
+        animationDisplayed = true;
+        
+      }
+    }
+    
+    // Call the function when the page is loaded
+    window.onload = typeText;
+    
+
+  </script>
+
+
+<main>
+    
+    <div class="home">
+        <!-- <h1>Home page</h1> -->
+        <!-- <p><%= homecont  %></p> -->
+        <!-- <h1 id="typing-effect">#Craft Your stories, ideas and perspective</h1> -->
+        <h1 id="typing-effect"></h1>
+    </div>
+
+    <div class="home home-blog">
+       <% posts.forEach(function(post){ %>
+
+        <div class="eachblog">
+            <h1><%=post.title%></h1>
+            <p><%= post.post.substring(0,600)+"..." %>
+                <!-- <a href="/post/<%=post.title%>">Read more</a> -->
+                <a href="/post/<%=post._id%>">Read more</a>
+            </p>
+            <form class="delrefdivform" action="/post/<%=post._id%>" method="post">
+              <div class="delrefdiv">  
+                <button class="delref">
+                  <a href="/" ><img src="/css/delicon.png" alt=""></a>
+                </button>
+              </div>
+            </form>
+        </div>
+            
+
+      <%  }) %>
+       
+    </div>
+
+
+
+</main>
+
+
+<%- include('footer'); -%>
+
+
+    

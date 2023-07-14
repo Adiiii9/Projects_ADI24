@@ -90,7 +90,7 @@ body{
 
   }
 
-.home , .contact, .about, .compose{
+.home , .contact, .contactreal, .compose{
     /* background-color: burlywood; */
     margin: 18px 4rem 4px 4rem;
     /* margin: 18px 4rem 6px 4rem; */
@@ -105,9 +105,87 @@ main {
   min-height: 86vh;
 }
 
-.contact, .about{                     /*newly added*/
-  background-color: cornsilk;
+.contactreal{                     /*newly added*/
+  background-color: rgb(247, 253, 251);
+  height: 76vh;
+  width: 90vw;
+  /* background-image: url(contactshape1.jpg); */
+  background: url(contactshape.jpg) no-repeat center center fixed; 
+  /* -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; */
+  background-size: cover;
+  
+  border-radius: 3rem;
+  border-bottom-right-radius: 0;
+  
+
 }
+
+.contactreal>h1{
+  padding:2rem; ;
+}
+
+.contact{                     /*newly added*/
+  /* background-color: cadetblue; */
+  display: flex;
+  
+  height: 79vh;
+}
+
+.contactform{
+  padding: 3rem;
+  /* background-color: aquamarine; */
+  border-top-left-radius: 3rem;
+  width: 45vw;
+  height:auto;
+  margin: 0;
+  text-align: center;
+}
+
+.about-div{
+  height: 74vh;
+  width: 60vw;
+  background-color: rgb(247, 253, 251);
+  /* background-color: rgb(247, 253, 234); */
+  border-radius: 10%;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.about-div>h1{
+  padding: 2rem;
+  text-align: center;
+}
+.about-div>p{
+  padding: 2rem;
+  text-align: center;
+}
+
+.aboutshape {
+  width: fit-content;
+  height: 74vh;
+  /* mix-blend-mode: multiply; */
+
+}
+
+.aboutshape img{
+  width: fit-content;
+  height: 74vh;
+  /* position: relative;
+  left: 14rem; */
+  border-top-right-radius: 20px;
+  border-top-left-radius: 0;
+  
+
+}
+
+/* .divdiv{
+  background-color: #213363;
+  width: 20px;
+  height: 20px;
+  display: flex;
+} */
 
 .home-blog{
     /* margin-top: 1rem; */
@@ -248,7 +326,7 @@ label{
 .delrefdivform{
   /* background-color: wheat; */
   /* margin: 2px; */
-  margin: 0;
+  margin-top: 1rem;
   padding: 0;
 }
 
@@ -261,4 +339,25 @@ label{
   padding: 4px;
   
 }
+
+.delrefdiv :hover{
+  background-color: #FFCACA;
+}
+
+.delikebtn{
+  
+  
+  border: transparent;
+  position: relative;
+  /* left: ; */
+  padding: 4px;
+  border: none;
+  outline: none;
+  
+}
+
+/* .likeimg{
+  width: 1.4rem;
+  height: auto;
+} */
 

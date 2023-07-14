@@ -28,7 +28,8 @@ const postSchema= new mongoose.Schema({
         type:String,
         required:true
     },
-    post:String
+    post:String,
+    like:{type:Number,default:0}
 })
 
 const Post = mongoose.model("Post", postSchema);
@@ -44,7 +45,7 @@ const aboutcontent="ABOUT Lorem ipsum dolor sit amet consectetur adipisicing eli
 
 const contactcontent="CONTACT Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem quidem inventore assumenda et. Deleniti dolorum atque eligendi ipsam quisquam voluptate harum officiis esse commodi."
 
-let posts=[];
+// let posts=[];
 
 app.listen(3000,function(req,res){
     console.log("Server started at port 3000")
@@ -139,9 +140,17 @@ app.get("/post/:postname",async function(req,res){
 
 })
 
-app.post("/post/:postname",async function(req,res){
+app.post("/post/:postname/btn",async function(req,res){
   const reqtitleurlname=req.params.postname;
+  const btnnkaunsa =req.body
+  
+  
+  
+  
+  
   try {
+
+    if(btnnkaunsa["button"]==="del"){
     const post = await Post.deleteOne({ _id: reqtitleurlname });
     // res.render("publish", {
     //   finaltitle: post.title,
@@ -149,9 +158,19 @@ app.post("/post/:postname",async function(req,res){
     //   curday:curday
     console.log("Deleted id = " + reqtitleurlname)
     res.redirect("/")
+    }
+    else if(btnnkaunsa["button"]==="like"){
+      const count=+1
+      const post = await Post.updateOne({ _id: reqtitleurlname },{$inc:{like: count}});
+      res.redirect("/")
+    }
 
+    
+    }
+    
+  
     // });
-  } catch (err) {
+  catch (err) {
     // Handle the error
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -160,4 +179,6 @@ app.post("/post/:postname",async function(req,res){
 
 
 })
+
+
 

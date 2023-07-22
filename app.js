@@ -1,20 +1,37 @@
+require('dotenv').config()
 const express=require("express");
 const bodyParser=require("body-parser");
 const path=require("path");
 const { title } = require("process");
 const _ =require("lodash")
 const mongoose = require('mongoose');
+const encrypt=require("mongoose-encryption")
+const bcrypt=require("bcrypt")
+const saltRounds=10
+const session=require("express-session")
+const passport=require("passport")
+const passportLocalMongoose=require("passport-local-mongoose")
 
 const app=express()
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname, '/public')))
+app.use(session({
+  secret: 'keyboard cat',    // secret .env file mae jayega
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.set('view engine', 'ejs');
 
 // MongoDB connecction
 mongoose.connect('mongodb://localhost/blogDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  // useCreateIndex :true
+  
 })
   .then(() => {
     console.log('Connected to MongoDB');
@@ -29,11 +46,38 @@ const postSchema= new mongoose.Schema({
         required:true
     },
     post:String,
-    like:{type:Number,default:0}
+    like:{type:Number,default:0},
+    currentdate:Number
 })
+
+
 
 const Post = mongoose.model("Post", postSchema);
 
+const userSchema= new mongoose.Schema({
+    email:String,
+    password:String
+})
+
+userSchema.plugin(passportLocalMongoose);
+
+
+// userSchema.plugin(encrypt,{secret:process.env.SECRET,encryptedFields:["password"]})
+
+const User = mongoose.model("User", userSchema);
+
+// CHANGE: USE "createStrategy" INSTEAD OF "authenticate"
+passport.use(User.createStrategy());
+
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 
 
@@ -53,8 +97,10 @@ app.listen(3000,function(req,res){
 
 
 app.get("/",async function(req,res){
-    // res.render("index",{homecont:homecontent,posts:posts})   
-    try {
+    // res.render("index",{homecont:homecontent,posts:posts})  
+
+    if(req.isAuthenticated()){
+      try {
         const posts = await Post.find({});
         res.render("index", {
           homecont: homecontent,
@@ -65,6 +111,29 @@ app.get("/",async function(req,res){
         console.error(err);
         res.status(500).send("Internal Server Error");
       }
+    }
+    else{
+      res.redirect("/register")
+    }
+    
+    
+    
+    
+
+
+
+
+    // try {
+    //     const posts = await Post.find({});
+    //     res.render("index", {
+    //       homecont: homecontent,
+    //       posts: posts
+    //     });
+    //   } catch (err) {
+    //     // Handle the error
+    //     console.error(err);
+    //     res.status(500).send("Internal Server Error");
+    //   }
     
 
 })
@@ -76,16 +145,143 @@ app.get("/about",function(req,res){
 app.get("/contact",function(req,res){
     res.render("contact",{contactcont:contactcontent})
 })
+app.get("/login",function(req,res){
+    res.render("login")
+})
+app.get("/register",function(req,res){
+    res.render("register")
+})
+
+app.post("/register",async function(req,res){
+
+  User.register({username:req.body.username},req.body.password,function(err,user){
+    if(err){
+      console.log(err)
+      res.redirect("/register")
+    }
+    else{
+      passport.authenticate("local")(req,res,function(){
+        console.log("registered")
+        res.redirect("/")
+      })
+    }
+  })
+
+
+
+
+
+
+
+
+//   bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
+//     const newuser= new User({
+//       email:req.body.username,
+//       password:hash
+//   })
+//   try {
+//     await newuser.save();
+//     res.redirect("/register");
+//   } catch (err) {
+//     // Handle the error
+//     console.error(err);
+//     res.status(500).send("Internal Server Error");
+//   }
+  
+  
+//   })
+    
+// });
+
+
+
+
+
+//   const newuser= new User({
+//     email:req.body.username,
+//     password:hash
+// })
+// try {
+//   await newuser.save();
+//   res.redirect("/register");
+// } catch (err) {
+//   // Handle the error
+//   console.error(err);
+//   res.status(500).send("Internal Server Error");
+// }
+
+
+})
+
+app.post("/login", function(req,res){
+
+  const user= new User({
+         email:req.body.username,
+         password:req.body.password
+     })
+
+     req.logIn(user,function(err){
+      if(err){
+        console.log(err)
+      }
+      else{
+        passport.authenticate("local")(req,res,function(){
+          res.redirect("/")
+        })
+      }
+     })
+
+
+
+
+
+
+
+
+
+
+//   const username=req.body.username
+//   const password=(req.body.password)
+// try {
+//   const userfound=await User.find({email:username})
+//   if(userfound){
+//     bcrypt.compare(password, userfound[0].password, function(err, result) {
+//       if(result===true)
+//       res.redirect("/")
+//   });
+//   // if(userfound[0].password===password){
+//   //   res.redirect("/")
+//   // }
+//   // else{
+//   //   console.log("Wrong password")
+//   //   res.redirect("/login")
+//   // }
+// }
+// else{
+//   res.redirect("/register")
+// }
+  
+  
+// } catch (err) {
+//   // Handle the error
+//   console.error(err);
+//   res.status(500).send("Internal Server Error");
+// }
+
+
+})
 
 app.get("/compose",function(req,res){
     res.render("compose",{contactcont:contactcontent})
 })
 
 app.post("/compose",async function(req,res){
+  const curday=new Date().toLocaleString()
     
     const post= new Post({
         title:req.body.titlename,
-        post:req.body.publishname
+        post:req.body.publishname,
+        curday:curday
     })
 
 
@@ -127,7 +323,7 @@ app.get("/post/:postname",async function(req,res){
     res.render("publish", {
       finaltitle: post.title,
       finalblog: post.post,
-      curday:curday
+      curday:post.curday
 
     
     });
@@ -163,6 +359,8 @@ app.post("/post/:postname/btn",async function(req,res){
       const count=+1
       const post = await Post.updateOne({ _id: reqtitleurlname },{$inc:{like: count}});
       res.redirect("/")
+      
+      
     }
 
     

@@ -26,7 +26,8 @@ body{
     align-items: center;
     background-color: #f2f2f2;
     padding: 10px;
-    /* box-shadow: 0 2px 2px -2px rgba(0,0,0,.2); */
+    box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+    position: sticky;
   }
   
   .navbar-brand {
@@ -46,8 +47,20 @@ body{
   }
   
   .navbar-menu li {
-    margin-left: 4rem;
+    margin-left: 2.4rem;
   }
+
+  .signinclass{
+    display: flex;
+
+    margin-left: 14rem;
+  }
+
+  /* ul div li:nth-last-child(-n+2){
+    background-color:blue;
+    
+    
+  } */
 
 
   
@@ -332,21 +345,22 @@ label{
 
 
 .delref{
-  background-color: #FAF0D7;
+  /* background-color: #FAF0D7; */
+  background-color: #FFEACA;
   border-radius: 20%;
-  position: relative;
-  left: 81rem;
+  position: absolute;
+  left: 85rem;
   padding: 4px;
   
 }
 
-.delrefdiv :hover{
+.delrefdiv>.delref :hover{
   background-color: #FFCACA;
 }
 
 .delikebtn{
   
-  
+  background-color: #FFEACA;
   border: transparent;
   position: relative;
   /* left: ; */
@@ -360,4 +374,18 @@ label{
   width: 1.4rem;
   height: auto;
 } */
+i{
+  gap: 2px;
+}
 
+i:hover{
+  
+  color: crimson;
+
+}
+
+.signinclass{
+  display: flex;
+  
+  
+}

@@ -50,10 +50,13 @@
             <form class="delrefdivform" action="/post/<%=post._id%>/btn/" method="post">
               <div class="delrefdiv">
                 <button class="delikebtn" name="button" value="like" id="likeid" type="submit">
-                 Like
+                  <i class="fa-sharp fa-solid fa-heart fa-xl " >  <span><%=post.like %></span></i>
+                  <!-- <p><%=post.likee %></p> -->
+                 
                 </button>  
                 <button class="delref" name="button" value="del" id="delid" type="submit">
-                  <a href="/" ><img src="/css/delicon.png" alt=""></a>
+                  <!-- <a href="/" ><img src="/css/delicon.png" alt=""></a> -->
+                  <a href="/" ><i class="fa-sharp fa-solid  fa-trash fa-xl" style="color: #0d0f11;"></i></a>
               
                 </button>
               </div>

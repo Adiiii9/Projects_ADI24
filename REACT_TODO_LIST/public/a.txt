@@ -1,0 +1,94 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #ffeaa7;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Architects Daughter", cursive;
+
+}
+
+.container{
+    width: 100%;
+    background-color: antiquewhite;
+    min-height: 500px;
+    max-width: 540px;
+    min-width: 270px;
+    padding: 1.4rem;
+    /* background: #b4d2ea; */
+    /* background-image:radial-gradient(#5984ae 7.2%, transparent 0); */
+    background-image: url("cool-background.png");
+    /* background-size: 24px 24px; */
+    border-radius: 20px;
+    box-shadow: 4px 3px 7px 2px #00000040;
+
+}
+
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: medium;
+    font-weight: 600;
+}
+
+.heading h1{
+    background-color: #fdcb6e;
+    transform: rotate(2deg);
+    padding: 0.6rem;
+}
+
+form input{ 
+  box-sizing: border-box;
+  background-color: transparent;
+  padding: 0.7rem;
+  border-bottom-right-radius: 15px 3px;
+  border-bottom-left-radius: 3px 15px;
+  border: solid 3px transparent;
+  border-bottom: dashed 2px #2d281f;
+  font-family: "Architects Daughter", cursive;
+  font-size: 1rem;
+  color: hsla(260, 2%, 25%, 0.7);
+  width: 70%;
+  margin-bottom: 20px;
+
+}
+
+form button{
+  box-sizing: border-box;
+  background-color:#fdcb6e;
+  padding: 0.7rem;
+  border-bottom-right-radius: 15px 3px;
+  border-bottom-left-radius: 3px 15px;
+  border: solid 0.6px ghostwhite;
+  font-family: "Architects Daughter", cursive;
+  font-size: 1rem;
+  color: hsla(260, 2%, 25%, 0.7);
+  margin-bottom: 20px;
+  margin-left: 0.9rem
+
+}
+
+li {
+    text-align: left;
+    position: relative;
+    padding: 0.5rem;
+    margin-left: 2rem;
+    list-style: square inside;
+
+  }
+
+.li-fried{
+    text-decoration: line-through;
+}
+  
+

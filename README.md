@@ -1,5 +1,7 @@
 # Projects_ADI24
---------------- BLOG WEBSITE ---------------
+------------------------ BLOG WEBSITE ------------------------ 
+
+
 Preview:
 Have a quick glance of our website : https://drive.google.com/uc?id=1WhUvn_SP6RpPZbQmp3GZWv5sYDo-BfEz&export=download
 

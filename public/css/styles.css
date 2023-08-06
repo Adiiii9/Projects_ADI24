@@ -27,7 +27,9 @@ body{
     background-color: #f2f2f2;
     padding: 10px;
     box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
-    position: sticky;
+   
+    width: 100%;
+    
   }
   
   .navbar-brand {
@@ -36,6 +38,7 @@ body{
     color: #333;
     margin-left: 3.6rem;
     font-family: 'Ysabeau SC', sans-serif;
+    position: relative;
   }
   
   .navbar-menu {
@@ -44,6 +47,7 @@ body{
     align-items: center;
     margin-left: 15rem;
     padding: 0;
+    position: relative;
   }
   
   .navbar-menu li {
@@ -349,7 +353,7 @@ label{
   background-color: #FFEACA;
   border-radius: 20%;
   position: absolute;
-  left: 85rem;
+  left: 90vw;
   padding: 4px;
   
 }
@@ -388,4 +392,116 @@ i:hover{
   display: flex;
   
   
+}
+
+.container{
+  background-color:cornsilk;
+  width: 45vw;
+  height: 60vh;
+  margin: 7.8rem auto 4px auto;
+  padding: 1.2rem;
+  border-radius: 2.4rem;
+  border: transparent;
+  /* From https://css.glass */
+background-color: #BDF2D5;
+/* border-radius: 16px; */
+/* background-image: url(shapesimg.jpg);
+background-size: contain; */
+box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+backdrop-filter: blur(0px);
+-webkit-backdrop-filter: blur(0px);
+border: 1px solid rgba(249, 236, 236, 0.48);
+
+/* background: #9796f0; 
+background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0); 
+background: linear-gradient(to right, #fbc7d4, #9796f0);  */
+
+
+}
+
+.container>h1{
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.card{
+  background-color:#BDF2D5;
+  /* background: rgba(249, 236, 236, 0.5); */
+/* border-radius: 16px; */
+/* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+/* background-image: url(shapesimg.jpg);
+background-size: contain;
+border: transparent; */
+backdrop-filter: blur(0px);
+-webkit-backdrop-filter: blur(0px);
+border: 1px solid rgba(249, 236, 236, 0.48);
+border: none;
+outline: none;
+
+/* background: #9796f0;  
+background: -webkit-linear-gradient(to right, #fbc7d4, #9796f0); 
+background: linear-gradient(to right, #fbc7d4, #9796f0); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
+
+   */
+}
+
+.form-group{
+  width: fit-content;
+  margin: 2.4px auto 2.4px auto;
+  outline: none;
+  
+}
+
+
+
+.form-group>input{
+  width: 245px;
+  height: 30px;
+  border: transparent;
+  border-radius: 15px;
+  padding: 1.2rem;
+  outline: none;
+  border: none;
+}
+
+.form-group>input:hover{
+  box-shadow: black 6px 6px 0 0;
+  color: #000000;
+}
+
+.register-button{
+  width: fit-content;
+  margin: 2.4px auto 2.4px auto;
+}
+
+.register-button-class{
+  width: 245px;
+  height: 40px;
+  border: transparent;
+  border-radius: 15px;
+  text-align: center;
+  margin: 2.4px auto 2.4px auto;
+  cursor: pointer;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  background-color: #000000;
+  color: #FFFFFF;
+
+
+  
+
+}
+
+.register-button-class:hover{
+  background-color:#6DECB9;
+  box-shadow: black 6px 6px 0 0;
+  color: #000000;
+
+}
+
+.register-button-class>a{
+  text-decoration: none;
+  color: white;
 }

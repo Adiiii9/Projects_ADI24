@@ -11,6 +11,9 @@ const saltRounds=10
 const session=require("express-session")
 const passport=require("passport")
 const passportLocalMongoose=require("passport-local-mongoose")
+const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const findOrCreate = require('mongoose-findorcreate')
+
 
 const app=express()
 
@@ -47,7 +50,13 @@ const postSchema= new mongoose.Schema({
     },
     post:String,
     like:{type:Number,default:0},
-    currentdate:Number
+    currentdate:Number,
+    createdAt: {
+      type: Date,
+      default: Date.now
+    },
+    
+
 })
 
 
@@ -56,10 +65,13 @@ const Post = mongoose.model("Post", postSchema);
 
 const userSchema= new mongoose.Schema({
     email:String,
-    password:String
+    password:String,
+    handlename:String,
+    googleId:String
 })
 
 userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(findOrCreate);
 
 
 // userSchema.plugin(encrypt,{secret:process.env.SECRET,encryptedFields:["password"]})
@@ -71,13 +83,40 @@ passport.use(User.createStrategy());
 
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
-passport.serializeUser(function(user, done) {
-  done(null, user);
+// passport.serializeUser(function(user, done) {
+//   done(null, user);
+// });
+
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
+
+passport.serializeUser(function(user, cb) {
+  process.nextTick(function() {
+    cb(null, { id: user.id, username: user.username, name: user.name });
+  });
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser(function(user, cb) {
+  process.nextTick(function() {
+    return cb(null, user);
+  });
 });
+
+// Google auth 2.0 always below ser and deser
+passport.use(new GoogleStrategy({
+  clientID:     process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/google/project24",
+  // passReqToCallback   : true,
+  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+},
+function(request, accessToken, refreshToken, profile, done) {
+  User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    return done(err, user);
+  });
+}
+));
 
 
 
@@ -91,21 +130,28 @@ const contactcontent="CONTACT Lorem ipsum dolor sit amet consectetur adipisicing
 
 // let posts=[];
 
-app.listen(3000,function(req,res){
-    console.log("Server started at port 3000")
-})
+// app.listen(3000,function(req,res){
+//     console.log("Server started at port 3000")
+// })
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 
 app.get("/",async function(req,res){
     // res.render("index",{homecont:homecontent,posts:posts})  
+    const handlename=req.body.handlename
 
     if(req.isAuthenticated()){
       try {
-        const posts = await Post.find({});
+        let posts = await Post.find({}).sort({_id:-1});
+        
         res.render("index", {
           homecont: homecontent,
-          posts: posts
+          posts: posts,
+          handlename:handlename
         });
+        
       } catch (err) {
         // Handle the error
         console.error(err);
@@ -138,6 +184,18 @@ app.get("/",async function(req,res){
 
 })
 
+app.get('/auth/google',
+  passport.authenticate('google', { scope:
+      [ 'email', 'profile' ] }
+));
+
+app.get( '/auth/google/project24',
+    passport.authenticate( 'google', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+}));
+  
+
 app.get("/about",function(req,res){
     res.render("about",{aboutcont:aboutcontent})
 })
@@ -153,6 +211,8 @@ app.get("/register",function(req,res){
 })
 
 app.post("/register",async function(req,res){
+
+  const handlename=req.body.handlename
 
   User.register({username:req.body.username},req.body.password,function(err,user){
     if(err){
@@ -346,6 +406,7 @@ app.post("/post/:postname/btn",async function(req,res){
   
   try {
 
+  
     if(btnnkaunsa["button"]==="del"){
     const post = await Post.deleteOne({ _id: reqtitleurlname });
     // res.render("publish", {

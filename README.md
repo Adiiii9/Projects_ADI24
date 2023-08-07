@@ -29,6 +29,4 @@ Welcome to our Blog Website! This personal project showcases a functional blog p
 
 ## Preview
 
-Take a quick glance at our website:
-
-![Blog Website Preview](https://drive.google.com/uc?id=1WhUvn_SP6RpPZbQmp3GZWv5sYDo-BfEz&export=download)
+Take a quick glance at our website: https://drive.google.com/uc?id=1WhUvn_SP6RpPZbQmp3GZWv5sYDo-BfEz&export=download

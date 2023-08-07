@@ -3,7 +3,7 @@
 
 
 Preview:
-Have a quick glance of our website : https://clipchamp.com/watch/4uW3vIeknuh
+Have a quick glance of our website : https://drive.google.com/uc?id=1WhUvn_SP6RpPZbQmp3GZWv5sYDo-BfEz&export=download
 
 Description:
 Welcome to our Blog Website! This personal project showcases a functional blog platform that allows users to curate and share their ideas and thoughts with the world. The website's backend is built using Node.js and Express.js, with MongoDB serving as the database. It incorporates various technologies, including Passport.js and Google OAuth 2.0, to provide secure and user-friendly login functionality. The visually appealing interface enhances the overall user experience, making it enjoyable to read and interact with blog posts.
